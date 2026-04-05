@@ -1,5 +1,5 @@
 # Dockerfile
-FROM openjdk:17-slim
+FROM openjdk:17-jdk-slim-bullseye
 
 # Set working directory
 WORKDIR /app
