@@ -1,14 +1,11 @@
-# Dockerfile for Java Maven app
-FROM openjdk:17-jdk-slim
+# Dockerfile
+FROM openjdk:17-jdk-slim-bullseye
 
-# Set working directory inside container
+# Set working directory
 WORKDIR /app
 
-# Copy the jar file built by Maven
-COPY target/*.jar app.jar
+# Copy jar file
+COPY target/jb-hello-world-maven-0.2.1-SNAPSHOT-shaded.jar app.jar
 
-# Expose the port (matches your Jenkins pipeline PORT)
-EXPOSE 80
-
-# Run the jar when container starts
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Run the jar
+CMD ["java", "-jar", "app.jar"]
