@@ -65,17 +65,15 @@
         </plugins>
     </build>
 
-    <distributionManagement>
-        <repository>
-            <id>maven-releases</id>
-            <name>admin</name>
-            <url>http://43.205.198.28:8081/repository/maven-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>maven-snapshots</id>
-            <name>admin</name>
-            <url>http://43.205.198.28:8081/repository/maven-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
+  <distributionManagement>
+    <repository>
+        <id>maven-releases</id>
+        <url>http://43.205.198.28:8081/repository/maven-releases/</url>
+    </repository>
+    <snapshotRepository>
+        <id>maven-snapshots</id>
+        <url>http://43.205.198.28:8081/repository/maven-snapshots/</url>
+    </snapshotRepository>
+</distributionManagement>
 
 </project>
