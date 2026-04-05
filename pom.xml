@@ -7,11 +7,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.springframework</groupId>
     <artifactId>jb-hello-world-maven</artifactId>
-    <version>0.2.0</version>
+    <version>0.2.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
-        <!-- Updated Java to match SonarQube scanner -->
+        <!-- Java version -->
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -20,8 +20,13 @@
         <sonar.projectKey>org.springframework:jb-hello-world-maven</sonar.projectKey>
         <sonar.projectName>jb-hello-world-maven</sonar.projectName>
         <sonar.sources>src/main/java</sonar.sources>
-        <sonar.tests>src/test/java</sonar.tests>
-        <sonar.java.binaries>target/classes</sonar.java.binaries>
+
+        <!-- Sonar tests folder (safe if empty) -->
+        <sonar.tests>${basedir}/src/test/java</sonar.tests>
+        <sonar.java.binaries>${project.build.directory}/classes</sonar.java.binaries>
+
+        <!-- Ensure Sonar doesn’t fail if test folder missing -->
+        <sonar.skip>false</sonar.skip>
     </properties>
 
     <dependencies>
@@ -34,7 +39,7 @@
 
     <build>
         <plugins>
-            <!-- Maven Shade Plugin -->
+            <!-- Maven Shade Plugin to create fat jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -65,15 +70,15 @@
         </plugins>
     </build>
 
-  <distributionManagement>
-    <repository>
-        <id>maven-releases</id>
-        <url>http://43.205.198.28:8081/repository/maven-releases/</url>
-    </repository>
-    <snapshotRepository>
-        <id>maven-snapshots</id>
-        <url>http://43.205.198.28:8081/repository/maven-snapshots/</url>
-    </snapshotRepository>
-</distributionManagement>
+    <distributionManagement>
+        <repository>
+            <id>maven-releases</id>
+            <url>http://43.205.198.28:8081/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>maven-snapshots</id>
+            <url>http://43.205.198.28:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>
