@@ -1,11 +1,25 @@
-# Use official Prometheus image as base
-FROM prom/prometheus:latest
+# Stage 1: Build the JAR
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 
-# Copy your custom prometheus.yml into the container
-COPY prometheus.yml /etc/prometheus/prometheus.yml
+WORKDIR /app
 
-# Expose Prometheus default port
-EXPOSE 9090
+# Copy pom first (for dependency caching)
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-# Start Prometheus
-CMD ["--config.file=/etc/prometheus/prometheus.yml"]
+# Copy source code
+COPY src ./src
+
+# Build shaded JAR
+RUN mvn clean package -DskipTests
+
+# Stage 2: Run the JAR
+FROM eclipse-temurin:17-jdk-alpine
+
+WORKDIR /app
+
+# Copy the fat JAR from build stage
+COPY --from=build /app/target/*jar /app/app.jar
+
+# Run your main class (already defined in shade plugin)
+CMD ["java", "-jar", "app.jar"]
